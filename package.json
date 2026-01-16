@@ -6,19 +6,19 @@
     "apps/*",
     "packages/*"
   ],
-"scripts": {
-  "dev": "npm --workspace @koji/desktop run dev",
-  "build": "npm --workspace @koji/desktop run build",
-
-  "lint": "npm --workspace @koji/desktop run lint",
-  "test": "npm --workspace @koji/desktop run test",
-  "typecheck": "npm --workspace @koji/desktop run typecheck",
-
-  "check": "npm run typecheck && npm run lint && npm run test",
-
-  "format": "prettier -w .",
-  "format:check": "prettier -c ."
-},
+  "scripts": {
+    "dev": "npm --workspace @koji/desktop run dev",
+    "build": "npm --workspace @koji/desktop run build",
+    "lint": "npm --workspace @koji/desktop run lint",
+    "test": "npm --workspace @koji/desktop run test",
+    "typecheck": "npm --workspace @koji/desktop run typecheck",
+    "check": "npm run typecheck && npm run lint && npm run test",
+    "format": "prettier -w .",
+    "format:check": "prettier -c ."
+  },
+  "overrides": {
+    "rollup": "3.29.4"
+  },
   "devDependencies": {
     "prettier": "^3.2.5",
     "typescript": "^5.5.4"
