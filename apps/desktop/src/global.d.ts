@@ -8,7 +8,7 @@ declare global {
         onMainProcessMessage: (callback: (message: string) => void) => void
       }
       recipes: {
-        getAll: () => Promise<any>
+        getAll: () => Promise<unknown[]>
       }
     }
   }
