@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { RECIPES } from '../data/recipes'
 
 export default function RecipesPage() {

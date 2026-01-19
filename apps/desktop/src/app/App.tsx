@@ -9,7 +9,7 @@ function App() {
   const [count, setCount] = useState(0)
   const [view, setView] = useState<'home' | 'recipes'>('home')
 
-  // Si quieres que Recipes use tu CSS global, lo dejamos así.
+  
   if (view === 'recipes') {
     return (
       <>
