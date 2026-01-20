@@ -1,55 +1,42 @@
-import { useState } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '/electron-vite.animate.svg'
-import './App.css'
+import { useMemo, useState } from 'react'
+import AppShell from './shell/AppShell'
 
+import DashboardPage from './pages/DashboardPage'
 import RecipesPage from './pages/RecipesPage'
 
-function App() {
-  const [count, setCount] = useState(0)
-  const [view, setView] = useState<'home' | 'recipes'>('home')
+type ViewId = 'dashboard' | 'recipes' | 'ingredients' | 'mealplan'
 
-  
-  if (view === 'recipes') {
-    return (
-      <>
-        <div style={{ display: 'flex', gap: 12, padding: 16, alignItems: 'center' }}>
-          <button onClick={() => setView('home')}>← Back</button>
-          <strong>Recipes</strong>
-        </div>
-        <RecipesPage />
-      </>
-    )
-  }
+export default function App() {
+  const nav = useMemo(
+    () => [
+      { id: 'dashboard', label: 'Dashboard' },
+      { id: 'recipes', label: 'Recipes' },
+      { id: 'ingredients', label: 'Ingredients' },
+      { id: 'mealplan', label: 'Meal Plan' },
+    ],
+    [],
+  )
+
+  const [view, setView] = useState<ViewId>('dashboard')
 
   return (
-    <>
-      <div>
-        <a href="https://electron-vite.github.io" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+    <AppShell title="Kitchen workflow" nav={nav} activeId={view} onNavigate={id => setView(id as ViewId)}>
+      {view === 'dashboard' && <DashboardPage />}
+      {view === 'recipes' && <RecipesPage />}
 
-      <h1>Culos + Tetas</h1>
-
-      <div className="card">
-        <button onClick={() => setCount(count + 1)}>count is {count}</button>
-
-        <p>
-          Edit <code>src/app/App.tsx</code> and P-utos
-        </p>
-
-        <div style={{ marginTop: 12 }}>
-          <button onClick={() => setView('recipes')}>Open Recipes</button>
+      {view === 'ingredients' && (
+        <div style={{ display: 'grid', gap: 8 }}>
+          <h1 style={{ margin: 0 }}>Ingredients</h1>
+          <p style={{ margin: 0, opacity: 0.8 }}>Placeholder.</p>
         </div>
-      </div>
+      )}
 
-      <p className="read-the-docs">Click on the Vite and React logos to learn more jaja x¿</p>
-    </>
+      {view === 'mealplan' && (
+        <div style={{ display: 'grid', gap: 8 }}>
+          <h1 style={{ margin: 0 }}>Meal Plan</h1>
+          <p style={{ margin: 0, opacity: 0.8 }}>Placeholder.</p>
+        </div>
+      )}
+    </AppShell>
   )
 }
-
-export default App
