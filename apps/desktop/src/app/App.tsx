@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react'
-import AppShell from './shell/AppShell'
-
-import DashboardPage from './pages/DashboardPage'
-import RecipesPage from './pages/RecipesPage'
+import AppShell from '@/app/shell/AppShell'
+import DashboardPage from '@/app/pages/DashboardPage'
+import { RecipesPage } from '@/features/recipes'
 
 type ViewId = 'dashboard' | 'recipes' | 'ingredients' | 'mealplan'
 

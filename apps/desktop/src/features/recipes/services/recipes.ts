@@ -1,14 +1,4 @@
-export type Recipe = {
-  id: string
-  title: string
-  description: string
-  servings: number
-  prepMinutes: number
-  cookMinutes: number
-  ingredients: { item: string; qty?: string }[]
-  steps: string[]
-  tags: string[]
-}
+import type { Recipe } from '@/features/recipes/types'
 
 export const RECIPES: Recipe[] = [
   {
