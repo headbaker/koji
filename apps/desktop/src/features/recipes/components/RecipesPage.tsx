@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { RECIPES } from '@/features/recipes/services/recipes'
+import { RECIPES } from '@/features/recipes/services/recipes.service'
 import type { Recipe } from '@/features/recipes/types'
 import RecipeModal from '@/features/recipes/components/RecipeModal'
 
@@ -65,115 +65,60 @@ export default function RecipesPage() {
   }
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-        <h1 style={{ margin: 0 }}>Recipes</h1>
+    <div className="page">
+      <div className="page__header">
+        <h1 className="page__title">Recipes</h1>
 
-        <input
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          placeholder="Search…"
-          style={{
-            marginLeft: 'auto',
-            padding: '8px 10px',
-            borderRadius: 10,
-            border: '1px solid rgba(255,255,255,0.15)',
-            background: 'rgba(255,255,255,0.06)',
-            color: 'inherit',
-            width: 280,
-          }}
-        />
+        <div className="page__toolbar">
+          <input
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="Search…"
+            className="input page__search"
+          />
 
-        <button
-          onClick={openNew}
-          style={{
-            padding: '8px 12px',
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.12)',
-            background: 'rgba(255,255,255,0.08)',
-            color: 'inherit',
-            cursor: 'pointer',
-            fontWeight: 700,
-          }}
-        >
-          + New
-        </button>
+          <button onClick={openNew} className="button--primary">
+            + New
+          </button>
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gap: 12 }}>
+      <div className="page__list">
         {filtered.map(r => (
-          <div
-            key={r.id}
-            style={{
-              border: '1px solid rgba(255,255,255,0.12)',
-              borderRadius: 16,
-              padding: 14,
-              background: 'rgba(255,255,255,0.04)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-              <h2 style={{ margin: 0 }}>{r.title}</h2>
-              <span style={{ opacity: 0.7, fontSize: 12 }}>
+          <div key={r.id} className="card">
+            <div className="card__header">
+              <h2>{r.title}</h2>
+              <span className="card__meta">
                 {r.prepMinutes + r.cookMinutes} min • {r.servings} servings
               </span>
 
-              <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
-                <button
-                  onClick={() => openEdit(r)}
-                  style={{
-                    padding: '6px 10px',
-                    borderRadius: 12,
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    background: 'rgba(255,255,255,0.04)',
-                    color: 'inherit',
-                    cursor: 'pointer',
-                  }}
-                >
+              <div className="card__actions">
+                <button onClick={() => openEdit(r)} className="button--ghost">
                   Edit
                 </button>
 
-                <button
-                  onClick={() => deleteRecipe(r.id)}
-                  style={{
-                    padding: '6px 10px',
-                    borderRadius: 12,
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    background: 'rgba(255,255,255,0.04)',
-                    color: 'inherit',
-                    cursor: 'pointer',
-                    opacity: 0.9,
-                  }}
-                >
+                <button onClick={() => deleteRecipe(r.id)} className="button--ghost">
                   Delete
                 </button>
               </div>
             </div>
 
-            <p style={{ margin: '8px 0 10px', opacity: 0.9 }}>{r.description}</p>
+            <p className="card__description">{r.description}</p>
 
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
+            <div className="tag-list">
               {r.tags.map(t => (
-                <span
-                  key={t}
-                  style={{
-                    fontSize: 12,
-                    padding: '4px 8px',
-                    borderRadius: 999,
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    opacity: 0.85,
-                  }}
-                >
+                <span key={t} className="tag">
                   {t}
                 </span>
               ))}
             </div>
 
-            <details>
-              <summary style={{ cursor: 'pointer', opacity: 0.9 }}>Details</summary>
-              <div style={{ display: 'grid', gap: 10, marginTop: 10 }}>
+            <details className="details">
+              <summary className="details__summary">Details</summary>
+              <div className="details__body">
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: 6 }}>Ingredients</div>
-                  <ul style={{ margin: 0, paddingLeft: 18, opacity: 0.95 }}>
+                  <div className="section-title">Ingredients</div>
+                  <ul className="list">
                     {r.ingredients
                       .filter(i => (i.item ?? '').trim().length > 0 || (i.qty ?? '').trim().length > 0)
                       .map((i, idx) => (
@@ -186,8 +131,8 @@ export default function RecipesPage() {
                 </div>
 
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: 6 }}>Steps</div>
-                  <ol style={{ margin: 0, paddingLeft: 18, opacity: 0.95 }}>
+                  <div className="section-title">Steps</div>
+                  <ol className="list">
                     {r.steps.filter(s => s.trim().length > 0).map((s, idx) => (
                       <li key={idx}>{s}</li>
                     ))}

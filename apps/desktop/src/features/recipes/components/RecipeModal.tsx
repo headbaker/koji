@@ -68,7 +68,6 @@ export default function RecipeModal({ open, mode, initial, onClose, onSave }: Re
   const [ingredientsText, setIngredientsText] = useState(ingredientsToText(initial.ingredients))
   const [stepsText, setStepsText] = useState(stepsToText(initial.steps))
 
-  // Reset form whenever we open with a new "initial"
   useEffect(() => {
     if (!open) return
     setTitle(initial.title)
@@ -124,200 +123,114 @@ export default function RecipeModal({ open, mode, initial, onClose, onSave }: Re
         e.preventDefault()
         handleCancel()
       }}
-      style={{
-        width: 'min(920px, calc(100vw - 32px))',
-        border: '1px solid rgba(255,255,255,0.14)',
-        borderRadius: 18,
-        padding: 0,
-        background: '#0b0d10',
-        color: 'rgba(255,255,255,0.92)',
-      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="recipe-modal-title"
+      className="modal"
     >
-      <div style={{ padding: 16, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ fontWeight: 800, fontSize: 16 }}>
-            {mode === 'new' ? 'New Recipe' : 'Edit Recipe'}
-          </div>
+      <div className="modal__header">
+        <div id="recipe-modal-title" className="modal__title">
+          {mode === 'new' ? 'New Recipe' : 'Edit Recipe'}
+        </div>
 
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
-            <button
-              onClick={handleCancel}
-              style={{
-                padding: '8px 12px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.12)',
-                background: 'rgba(255,255,255,0.04)',
-                color: 'inherit',
-                cursor: 'pointer',
-              }}
-            >
-              Cancel
-            </button>
+        <div className="modal__actions">
+          <button onClick={handleCancel} className="button--ghost">
+            Cancel
+          </button>
 
-            <button
-              onClick={handleSave}
-              disabled={!canSave}
-              style={{
-                padding: '8px 12px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.12)',
-                background: canSave ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.04)',
-                opacity: canSave ? 1 : 0.5,
-                color: 'inherit',
-                cursor: canSave ? 'pointer' : 'not-allowed',
-                fontWeight: 700,
-              }}
-            >
-              Save
-            </button>
-          </div>
+          <button onClick={handleSave} disabled={!canSave} className="button--primary">
+            Save
+          </button>
         </div>
       </div>
 
-      <div style={{ padding: 16, display: 'grid', gap: 14 }}>
-        <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ opacity: 0.8, fontSize: 12 }}>Title</label>
+      <div className="modal__body">
+        <div className="form-grid">
+          <label className="form-label">Title</label>
           <input
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="e.g. Miso soup"
-            style={{
-              padding: '10px 12px',
-              borderRadius: 12,
-              border: '1px solid rgba(255,255,255,0.14)',
-              background: 'rgba(255,255,255,0.05)',
-              color: 'inherit',
-            }}
+            className="input"
           />
         </div>
 
-        <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ opacity: 0.8, fontSize: 12 }}>Description</label>
+        <div className="form-grid">
+          <label className="form-label">Description</label>
           <textarea
             value={description}
             onChange={e => setDescription(e.target.value)}
             placeholder="Short description…"
             rows={3}
-            style={{
-              padding: '10px 12px',
-              borderRadius: 12,
-              border: '1px solid rgba(255,255,255,0.14)',
-              background: 'rgba(255,255,255,0.05)',
-              color: 'inherit',
-              resize: 'vertical',
-            }}
+            className="textarea"
           />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ opacity: 0.8, fontSize: 12 }}>Servings</label>
+        <div className="form-grid form-grid--columns">
+          <div className="form-grid">
+            <label className="form-label">Servings</label>
             <input
               value={servings}
               onChange={e => setServings(e.target.value)}
               inputMode="numeric"
               placeholder="1"
-              style={{
-                padding: '10px 12px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.14)',
-                background: 'rgba(255,255,255,0.05)',
-                color: 'inherit',
-              }}
+              className="input"
             />
           </div>
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ opacity: 0.8, fontSize: 12 }}>Prep (min)</label>
+          <div className="form-grid">
+            <label className="form-label">Prep (min)</label>
             <input
               value={prepMinutes}
               onChange={e => setPrepMinutes(e.target.value)}
               inputMode="numeric"
               placeholder="0"
-              style={{
-                padding: '10px 12px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.14)',
-                background: 'rgba(255,255,255,0.05)',
-                color: 'inherit',
-              }}
+              className="input"
             />
           </div>
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ opacity: 0.8, fontSize: 12 }}>Cook (min)</label>
+          <div className="form-grid">
+            <label className="form-label">Cook (min)</label>
             <input
               value={cookMinutes}
               onChange={e => setCookMinutes(e.target.value)}
               inputMode="numeric"
               placeholder="0"
-              style={{
-                padding: '10px 12px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.14)',
-                background: 'rgba(255,255,255,0.05)',
-                color: 'inherit',
-              }}
+              className="input"
             />
           </div>
         </div>
 
-        <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ opacity: 0.8, fontSize: 12 }}>Tags (comma separated)</label>
+        <div className="form-grid">
+          <label className="form-label">Tags (comma separated)</label>
           <input
             value={tags}
             onChange={e => setTags(e.target.value)}
             placeholder="e.g. meal-prep, japanese, fast"
-            style={{
-              padding: '10px 12px',
-              borderRadius: 12,
-              border: '1px solid rgba(255,255,255,0.14)',
-              background: 'rgba(255,255,255,0.05)',
-              color: 'inherit',
-            }}
+            className="input"
           />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ opacity: 0.8, fontSize: 12 }}>
-              Ingredients (one per line, use “qty | item”)
-            </label>
+        <div className="form-grid form-grid--two">
+          <div className="form-grid">
+            <label className="form-label">Ingredients (one per line, use “qty | item”)</label>
             <textarea
               value={ingredientsText}
               onChange={e => setIngredientsText(e.target.value)}
               rows={10}
               placeholder={`500 ml | Water\n1 tbsp | Miso paste\nTofu`}
-              style={{
-                padding: '10px 12px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.14)',
-                background: 'rgba(255,255,255,0.05)',
-                color: 'inherit',
-                resize: 'vertical',
-                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-                fontSize: 12,
-              }}
+              className="textarea mono"
             />
           </div>
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ opacity: 0.8, fontSize: 12 }}>Steps (one per line)</label>
+          <div className="form-grid">
+            <label className="form-label">Steps (one per line)</label>
             <textarea
               value={stepsText}
               onChange={e => setStepsText(e.target.value)}
               rows={10}
               placeholder={`Boil water\nDissolve miso\nServe`}
-              style={{
-                padding: '10px 12px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.14)',
-                background: 'rgba(255,255,255,0.05)',
-                color: 'inherit',
-                resize: 'vertical',
-                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-                fontSize: 12,
-              }}
+              className="textarea mono"
             />
           </div>
         </div>
